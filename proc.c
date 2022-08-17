@@ -192,7 +192,8 @@ proc_start(const char *name, struct event_base *base, int forkflag,
 	if (tmate_foreground) {
 		if (forkflag)
 			clear_signals(0);
-		log_open_fp(stdout);
+		else
+			log_open_fp(stdout);
 	} else {
 		log_open(name);
 	}

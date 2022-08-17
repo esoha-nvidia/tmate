@@ -158,11 +158,14 @@ server_start(struct event_base *base, int lockfd, char *lockfile)
 
 	server_proc = proc_start("server", base, 1, server_signal);
 	if (server_proc == NULL) {
+		if (tmate_foreground)
+			exit(1);
 		close(pair[1]);
 		return (pair[0]);
 	}
 
-	close(pair[0]);
+	if (!tmate_foreground)
+		close(pair[0]);
 
 	if (log_get_level() > 3)
 		tty_create_log();
